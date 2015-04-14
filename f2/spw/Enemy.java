@@ -39,4 +39,8 @@ public class Enemy extends Sprite{
 	public boolean isAlive(){
 		return alive;
 	}
+
+	public boolean isDie(){
+		return alive = false;
+	}
 }

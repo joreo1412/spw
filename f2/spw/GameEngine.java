@@ -15,6 +15,7 @@ public class GameEngine implements KeyListener, GameReporter{
 	GamePanel gp;
 		
 	private ArrayList<Enemy> enemies = new ArrayList<Enemy>();	
+	private ArrayList<Gun> guns = new ArrayList<Gun>();
 	private SpaceShip v;	
 	
 	private Timer timer;
@@ -66,15 +67,30 @@ public class GameEngine implements KeyListener, GameReporter{
 			}
 		}
 		
+		Iterator<Gun> g_iter = guns.iterator();
+		while(g_iter.hasNext()){
+			Gun g = g_iter.next();
+			g.proceed();
+		}
+
 		gp.updateGameUI(this);
 		
 		Rectangle2D.Double vr = v.getRectangle();
 		Rectangle2D.Double er;
+		Rectangle2D.Double gr;
 		for(Enemy e : enemies){
 			er = e.getRectangle();
 			if(er.intersects(vr)){
 				die();
 				return;
+			}
+			for(Gun g : guns){
+				gr = g.getRectangle();
+				if(gr.intersects(er)){
+					gp.sprites.remove(e);
+					e.isDie();
+					return;
+				}
 			}
 		}
 	}
@@ -93,6 +109,8 @@ public class GameEngine implements KeyListener, GameReporter{
 			break;
 		case KeyEvent.VK_D:
 			difficulty += 0.1;
+			break;
+		case KeyEvent.VK_SPACE:
 			break;
 		}
 	}
