@@ -111,6 +111,7 @@ public class GameEngine implements KeyListener, GameReporter{
 			difficulty += 0.1;
 			break;
 		case KeyEvent.VK_SPACE:
+			
 			break;
 		}
 	}
